@@ -1,0 +1,1 @@
+source /mnt/c/buildozer/venv-buildozer/bin/activate

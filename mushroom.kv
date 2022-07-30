@@ -1,0 +1,129 @@
+Screen:
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: [.9, 1]
+        pos_hint: { 'top' : 1, 'right': .95}
+
+
+        Label:
+            text: "Я сейчас тут"
+            color: (0,1,0,1)
+            # text_size: (None, 20)
+            # font_size: 20
+            size_hint_y: 0.1
+
+        Label:
+            id: label_coords
+            text: "широта и долгота"
+            # color: (0,0,0,1)
+            # text_size: (None, 16)
+            font_size: 35
+            size_hint_y: 0.15
+
+        Label:
+            text: "и я нашел"
+            color: (0,1,0,1)
+            # text_size: (None, 16)
+            # font_size: 20
+            size_hint_y: 0.1
+
+        GridLayout:
+            id: buttons
+            cols: 2
+
+            Button:
+                text: "Белый!"
+                background_color: (1,1,1,1)
+                text_color: (0,0,0,1)
+                on_press: app.save_point('Белый', self.background_color)
+
+            Button:
+                text: "Подберезовик"
+                background_color: rgba("#873e23")
+                text_color: (1,1,1,1)
+                on_press: app.save_point('Подберезовик', self.background_color)
+
+            Button:
+                text: "Подосиновик"
+                background_color: rgba("#cc0000")
+                text_color: (1,1,1,1)
+                on_press: app.save_point('Подосиновик', self.background_color)
+
+            Button:
+                text: "Лисички"
+                background_color: rgba("#ffcc00")
+                text_color: (0,0,0,1)
+                on_press: app.save_point('Лисички', self.background_color)
+
+            Button:
+                text: "Козелок"
+                background_color: (0.7,1,0.7,1)
+                text_color: (0,0,0,1)
+                on_press: app.save_point('Козелок', self.background_color)
+
+            Button:
+                text: "Опята"
+                background_color: (0.7,0.7,0.7,1)
+                text_color: (0,0,0,1)
+                on_press: app.save_point('Опята', self.background_color)
+
+            Button:
+                text: "Масленок"
+                background_color: rgba("#f5bc49")
+                text_color: (0,0,0,1)
+                on_press: app.save_point('Масленок', self.background_color)
+
+            Button:
+                text: "Что-то еще"
+                background_color: (0,0,0,1)
+                text_color: (1,1,1,1)
+                on_press: app.save_point('Что-то еще', self.background_color)
+
+
+
+        # Label:
+        #     id: coordlog
+        #     text: "1\\n2\\n3"
+        #     # color: (0,0,0,1)
+
+        ScrollView:
+            do_scroll_x: True
+            do_scroll_y: True
+            size_hint_y: 0.2
+
+            Label:
+                id: label_log
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                padding: 10, 10
+                text:
+                    'coordinate log'
+
+        GridLayout:
+            id: buttons
+            rows: 1
+            size_hint_y: 0.15
+
+            # Button:
+            #     text: "JSON"
+            #     background_color: (1,1,1,1)
+            #     text_color: (0,0,0,1)
+            #     size_hint_y: 0.15
+            #     on_press: app.log('pressed JSON')
+
+
+
+            Button:
+                text: "Экспорт GPX"
+                background_color: (1,1,1,1)
+                text_color: (0,0,0,1)
+                size_hint_y: 0.15
+                on_press: app.save_gpx()
+
+            # Button:
+            #     text: "Очистить"
+            #     background_color: (1,0,0,1)
+            #     text_color: (0,0,0,1)
+            #     size_hint_y: 0.15
+            #     on_press: app.clear_storage()
