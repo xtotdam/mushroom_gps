@@ -4,6 +4,7 @@ from kivy.properties import StringProperty, ObjectProperty, NumericProperty, Dic
 from kivy.clock import mainthread, Clock
 from kivy.utils import platform
 from kivy.logger import Logger
+from kivy.uix.button import Button
 
 if platform == 'android':
     from android.storage import primary_external_storage_path
@@ -58,8 +59,6 @@ def get_coordinates():
 
 
 
-
-
 class MushroomApp(App):
     loc_points = ListProperty()
     loc_dict = None
@@ -78,14 +77,14 @@ class MushroomApp(App):
                              Permission.READ_EXTERNAL_STORAGE], callback)
 
     def log(self, *args, **kwargs):
-        Logger.info(' '.join(str(x) for x in args) + ' '.join('{}={}'.format(k,v) for (k,v) in kwargs.items()))
+        Logger.info('>>>' + ' '.join(str(x) for x in args) + ' '.join('{}={}'.format(k,v) for (k,v) in kwargs.items()))
 
 
     @mainthread
     def update_coordinates_label(self, dt):
         if platform == 'android':
             location = locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER)
-            self.log('@>>', location.toString())
+            # self.log('@>>', location.toString())
 
             self.loc_dict = dict()
             self.loc_dict['prov'] = location.getProvider()
@@ -126,8 +125,15 @@ class MushroomApp(App):
 
 
 
-    def save_kml(self):
-        pass
+    def clear_storage(self):
+        self.loc_points.clear()
+
+
+    def restore_storage(self):
+        try:
+            self.loc_points = json.load(open(json_file))
+        except FileNotFoundError:
+            self.log('No json file to restore')
 
 
 
@@ -163,10 +169,10 @@ class MushroomApp(App):
         Clock.schedule_interval(self.update_coordinates_label, 0.5)
 
         if platform == "android":
-            self.log("gps.py: Android detected. Requesting permissions")
+            # self.log("gps.py: Android detected. Requesting permissions")
             self.request_android_permissions()
 
-            self.log('@@', locationManager.getAllProviders().toString())
+            # self.log('@@', locationManager.getAllProviders().toString())
 
 
 
