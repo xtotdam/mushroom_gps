@@ -13,7 +13,7 @@ Screen:
         Label:
             id: label_coords
             text: "широта и долгота"
-            font_size: 35
+            # font_size: 35
             size_hint_y: 0.12
 
         Label:
@@ -37,49 +37,49 @@ Screen:
                         text: "Белый"
                         background_color: (1,1,1,1)
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Подберезовик"
                         background_color: rgba("#873e23")
                         text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Подосиновик"
                         background_color: rgba("#cc0000")
                         text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Лисички"
                         background_color: rgba("#ffcc00")
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Козелок"
                         background_color: (0.7,1,0.7,1)
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Опята"
                         background_color: (0.7,0.7,0.7,1)
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Масленок"
                         background_color: rgba("#f5bc49")
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                     Button:
                         text: "Чернушка"
                         background_color: (0,0,0,1)
                         text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
 
                         # волнушка
                         # рыжик
@@ -97,37 +97,37 @@ Screen:
                         text: "Земляника"
                         background_color: rgba("#F20739")
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'berry')
 
                     Button:
                         text: "Черника"
                         background_color: rgba("#4D115C")
                         text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'berry')
 
                     Button:
                         text: "Малина"
                         background_color: rgba("#BE2561")
                         text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'berry')
 
                     Button:
                         text: "Брусника"
                         background_color: rgba("#ff0000")
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'berry')
 
                     Button:
                         text: "Костяника"
                         background_color: rgba("#F21707")
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'berry')
 
                     Button:
                         text: "Клюква"
                         background_color: rgba("#F20739")
                         text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color)
+                        on_press: app.save_point(self.text, self.background_color, 'berry')
 
             TabbedPanelItem:
                 text: "Что-то еще"
@@ -137,11 +137,39 @@ Screen:
 
                     TextInput:
                         id: something
-                        hint_text: "Что-то еще"
+                        hint_text: "Что это?"
+
+                    GridLayout:
+                        cols: 2
+                        orientation: "lr-tb"
+                        size_hint_y: 0.5
+
+                        ToggleButton:
+                            group: "what"
+                            text: "Гриб"
+                            state: "down"
+                            id: tg_mushroom
+
+                        ToggleButton:
+                            group: "what"
+                            text: "Ягоды"
+                            id: tg_berry
+
+                        ToggleButton:
+                            group: "what"
+                            text: "Ориентир"
+                            id: tg_orientir
+
+                        ToggleButton:
+                            group: "what"
+                            text: "Еще что-то"
+                            id: tg_else
 
                     Button:
                         text: "Отметить"
-                        on_press: app.save_point(something.text, (0,0,1,1))
+                        size_hint_y: 0.25
+                        background_color: (0,1,0.5,1)
+                        on_press: app.save_point(something.text, (0,0,1,1), (tg_mushroom.state, tg_berry.state, tg_orientir.state, tg_else.state))
 
 
 

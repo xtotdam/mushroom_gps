@@ -14,7 +14,7 @@ if platform == 'android':
 else:
     primary_external_storage = '.'
 
-from plyer import gps
+from plyer import notification
 
 import uuid
 import json
@@ -104,7 +104,7 @@ class MushroomApp(App):
             # self.log(self.loc_dict)
 
             self.root.ids.label_log.text = '\n'.join(
-                '{realdate} {title}'.format(**x) for x in reversed(self.loc_points)
+                '{realdate} {title} [{category}]'.format(**x) for x in reversed(self.loc_points)
             )
 
         else:
@@ -113,11 +113,17 @@ class MushroomApp(App):
 
 
     @mainthread
-    def save_point(self, title, color):
-        # points = json.load(open(json_file))
+    def save_point(self, title, color, cat):
+        if isinstance(cat, tuple):
+            if cat[0] == 'down': cat = 'mushroom'
+            elif cat[1] == 'down': cat = 'berry'
+            elif cat[2] == 'down': cat = 'orientir'
+            else: cat = 'else'
+
         loc = self.loc_dict.copy()
         loc['title'] = title
         loc['color'] = hexrgb(color)
+        loc['category'] = cat
         # self.log('>>>>>', loc)
 
         self.loc_points.append(loc.copy())
@@ -151,7 +157,10 @@ class MushroomApp(App):
                     f'<time>{datetime.fromtimestamp(point["realtime"]).isoformat()}</time>' +\
                     '<desc>{prov}</desc>' +\
                     '<hdop>{acc}</hdop>' +\
-                    '<extensions><markercolor>{color}</markercolor></extensions>' +\
+                    '<extensions>' +\
+                        '<markercolor>{color}</markercolor>' +\
+                        '<category>{category}</category>' +\
+                    '</extensions>' +\
                 '</wpt>\n').format(**point)
             waypoints.append(wpt)
         head = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n' +\
@@ -163,6 +172,8 @@ class MushroomApp(App):
             for w in waypoints:
                 f.write(w)
             f.write(foot)
+
+        notification.notify(message=f'Записан {gpx_file}', toast=True)
 
 
     def build(self):
