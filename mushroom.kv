@@ -5,21 +5,34 @@ Screen:
         pos_hint: { 'top' : 1, 'right': .95}
 
 
-        Label:
-            text: "Я сейчас тут"
-            color: (0,1,0,1)
-            size_hint_y: 0.1
+        # Label:
+        #     text: "Я сейчас тут"
+        #     color: (0,1,0,1)
+        #     size_hint_y: 0.1
 
-        Label:
-            id: label_coords
-            text: "широта и долгота"
-            # font_size: 35
-            size_hint_y: 0.12
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.25
 
-        Label:
-            text: "и я нашел"
-            color: (0,1,0,1)
-            size_hint_y: 0.1
+            Label:
+                id: label_coords
+                text: "широта и долгота"
+                # font_size: 35
+                # size_hint_y: 0.12
+
+            Label:
+                id: label_dt
+                text: 'X'
+                color: (1, 0.5, 0, 1)
+                # size_hint_y: 0.12
+                size_hint_x: 0.25
+                font_size: 70
+
+
+        # Label:
+        #     text: "и я нашел"
+        #     color: (0,1,0,1)
+        #     size_hint_y: 0.1
 
 
         TabbedPanel:
@@ -33,53 +46,45 @@ Screen:
                     id: buttons
                     cols: 2
 
-                    Button:
+                    MushButton:
                         text: "Белый"
-                        background_color: (1,1,1,1)
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#ffffff"
 
-                    Button:
+                    MushButton:
                         text: "Подберезовик"
-                        background_color: rgba("#873e23")
-                        text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#873e23"
 
-                    Button:
+                    MushButton:
                         text: "Подосиновик"
-                        background_color: rgba("#cc0000")
-                        text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#cc0000"
 
-                    Button:
+                    MushButton:
                         text: "Лисички"
-                        background_color: rgba("#ffcc00")
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#ffcc00"
 
-                    Button:
+                    MushButton:
                         text: "Козелок"
-                        background_color: (0.7,1,0.7,1)
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#aaffaa"
 
-                    Button:
+                    MushButton:
                         text: "Опята"
-                        background_color: (0.7,0.7,0.7,1)
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#aaaaaa"
 
-                    Button:
-                        text: "Масленок"
-                        background_color: rgba("#f5bc49")
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                    MushButton:
+                        text: "Маслята"
+                        rgb: "#f5bc49"
 
-                    Button:
+                    MushButton:
                         text: "Чернушка"
-                        background_color: (0,0,0,1)
-                        text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color, 'mushroom')
+                        rgb: "#000000"
+
+                    MushButton:
+                        text: "Сыроежка"
+                        rgb: "#00ff00"
+
+                    MushButton:
+                        text: "Шампиньон"
+                        rgb: "#888888"
 
                         # волнушка
                         # рыжик
@@ -93,41 +98,29 @@ Screen:
                     id: buttons
                     cols: 2
 
-                    Button:
+                    BerryButton:
                         text: "Земляника"
-                        background_color: rgba("#F20739")
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'berry')
+                        rgb: "#F20739"
 
-                    Button:
+                    BerryButton:
                         text: "Черника"
-                        background_color: rgba("#4D115C")
-                        text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color, 'berry')
+                        rgb: "#4D115C"
 
-                    Button:
+                    BerryButton:
                         text: "Малина"
-                        background_color: rgba("#BE2561")
-                        text_color: (1,1,1,1)
-                        on_press: app.save_point(self.text, self.background_color, 'berry')
+                        rgb: "#BE2561"
 
-                    Button:
+                    BerryButton:
                         text: "Брусника"
-                        background_color: rgba("#ff0000")
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'berry')
+                        rgb: "#ff0000"
 
-                    Button:
+                    BerryButton:
                         text: "Костяника"
-                        background_color: rgba("#F21707")
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'berry')
+                        rgb: "#F21707"
 
-                    Button:
+                    BerryButton:
                         text: "Клюква"
-                        background_color: rgba("#F20739")
-                        text_color: (0,0,0,1)
-                        on_press: app.save_point(self.text, self.background_color, 'berry')
+                        rgb: "#F20739"
 
             TabbedPanelItem:
                 text: "Что-то еще"
@@ -144,32 +137,28 @@ Screen:
                         orientation: "lr-tb"
                         size_hint_y: 0.5
 
-                        ToggleButton:
-                            group: "what"
+                        WhatGroupTB:
                             text: "Гриб"
                             state: "down"
                             id: tg_mushroom
 
-                        ToggleButton:
-                            group: "what"
+                        WhatGroupTB:
                             text: "Ягоды"
                             id: tg_berry
 
-                        ToggleButton:
-                            group: "what"
+                        WhatGroupTB:
                             text: "Ориентир"
                             id: tg_orientir
 
-                        ToggleButton:
-                            group: "what"
+                        WhatGroupTB:
                             text: "Еще что-то"
-                            id: tg_else
+                            id: tg_other
 
                     Button:
                         text: "Отметить"
                         size_hint_y: 0.25
                         background_color: (0,1,0.5,1)
-                        on_press: app.save_point(something.text, (0,0,1,1), (tg_mushroom.state, tg_berry.state, tg_orientir.state, tg_else.state))
+                        on_release: app.save_point(something.text, '#0000ff', (tg_mushroom.state, tg_berry.state, tg_orientir.state, tg_other.state))
 
 
 
@@ -193,20 +182,38 @@ Screen:
             size_hint_y: 0.15
 
             Button:
-                text: "Экспорт GPX"
+                text: "Сохранить\nфайлы"
                 background_color: (1,1,1,1)
-                text_color: (0,0,0,1)
                 size_hint_y: 0.15
-                on_press: app.save_gpx()
+                on_release: app.save_files()
 
             Button:
-                text: "Восстановить"
+                text: "Восста-\nновить"
                 background_color: (0,1,0,1)
-                on_press: app.restore_storage()
+                on_release: app.restore_storage()
+
+            Button:
+                text: "Убрать\nпоследнюю\nзапись"
+                background_color: (1,1,0,1)
+                on_release: app.remove_last()
 
             Button:
                 text: "Очистить"
                 background_color: (1,0,0,1)
-                text_color: (0,0,0,1)
                 size_hint_y: 0.15
-                on_press: app.clear_storage()
+                on_release: app.clear_storage()
+
+<MyButton@Button>:
+    on_release: app.save_point(self.text, self.rgb, self.category)
+    rgb: "#333333"
+    background_color: rgba(self.rgb)
+
+<MushButton@MyButton>:
+    category: 'mushroom'
+
+<BerryButton@MyButton>:
+    category: 'berry'
+
+
+<WhatGroupTB@ToggleButton>:
+    group: 'what'
