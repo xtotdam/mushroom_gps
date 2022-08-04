@@ -128,6 +128,20 @@ Screen:
                 BoxLayout:
                     orientation: "vertical"
 
+                    GridLayout:
+                        cols: 2
+                        orientation: "lr-tb"
+                        size_hint_y: 0.2
+
+                        ProvGroupTB:
+                            text: "Fused"
+                            id: tg_fused
+
+                        ProvGroupTB:
+                            text: "GPS"
+                            state: "down"
+                            id: tg_gps
+
                     TextInput:
                         id: something
                         hint_text: "Что это?"
@@ -217,3 +231,7 @@ Screen:
 
 <WhatGroupTB@ToggleButton>:
     group: 'what'
+
+<ProvGroupTB@ToggleButton>:
+    group: 'provider'
+    # background_color: rgba("#ffff88")

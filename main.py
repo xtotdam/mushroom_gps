@@ -1,10 +1,9 @@
 from kivy.lang import Builder
 from kivy.app import App
-from kivy.properties import StringProperty, ObjectProperty, NumericProperty, DictProperty, ListProperty, OptionProperty
+from kivy.properties import DictProperty, ListProperty
 from kivy.clock import mainthread, Clock
 from kivy.utils import platform
 from kivy.logger import Logger
-from kivy.uix.button import Button
 
 if platform == 'android':
     from android.storage import primary_external_storage_path
@@ -16,10 +15,8 @@ else:
 
 from plyer import notification
 
-import uuid
 import json
 from pathlib import Path
-from functools import partial
 from datetime import datetime
 
 if platform == 'android':
@@ -134,7 +131,7 @@ class MushroomApp(App):
     def get_location_string(loc_dict, device=True) -> str:
         NS = 'N' if loc_dict['lat'] >= 0 else 'S'
         EW = 'E' if loc_dict['lon'] >= 0 else 'W'
-        s = ('{lat:.3f}{NS}  {lon:.3f}{EW} ± {acc:.1f}м [{alt:.1f}м н.у.м.]').format(NS=NS, EW=EW, **loc_dict)
+        s = ('{lat:.1f}{NS} {lon:.1f}{EW} ± {acc:.1f}м [{alt:.1f}м ^] <{prov:.1s}>').format(NS=NS, EW=EW, **loc_dict)
         return s
 
 
@@ -153,10 +150,13 @@ class MushroomApp(App):
         # self.loc_dict_network = self.get_location_info(LocationManager.NETWORK_PROVIDER)
         # self.loc_dict_passive = self.get_location_info(LocationManager.PASSIVE_PROVIDER)
 
-        self.loc_dict = self.loc_dict_gps
+        if self.root.ids.tg_fused.state == "down":
+            self.loc_dict = self.loc_dict_fused
+        else:
+            self.loc_dict = self.loc_dict_gps
 
         self.root.ids.label_coords.text = '\n'.join((
-            self.get_location_string(self.loc_dict_gps),
+            self.get_location_string(self.loc_dict),
             self.get_timeoffix_string(self.loc_dict_fused, False),
             # self.get_timeoffix_string(self.loc_dict_network, False),
             # self.get_timeoffix_string(self.loc_dict_passive, False),
