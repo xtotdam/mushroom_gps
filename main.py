@@ -8,6 +8,7 @@ from kivy.logger import Logger
 if platform == 'android':
     from android.storage import primary_external_storage_path
     from android.permissions import request_permissions, Permission
+    from plyer import vibrator
 
     primary_external_storage = primary_external_storage_path()
 else:
@@ -55,6 +56,13 @@ osmand_markers = dict(
     other = 'special_marker'
 )
 
+osmand_bg = dict(
+    mushroom = 'circle',
+    berry = 'circle',
+    orientir = 'octagon',
+    other = 'square'
+)
+
 
 mgps_storage = Path(primary_external_storage) / 'MushroomGPS'
 mgps_storage.mkdir(exist_ok=True)
@@ -86,6 +94,7 @@ class MushroomApp(App):
 
         request_permissions([Permission.ACCESS_COARSE_LOCATION,
                              Permission.ACCESS_FINE_LOCATION,
+                             Permission.VIBRATE,
                              Permission.ACCESS_BACKGROUND_LOCATION,
                              Permission.WRITE_EXTERNAL_STORAGE,
                              Permission.READ_EXTERNAL_STORAGE], callback)
@@ -170,6 +179,10 @@ class MushroomApp(App):
         )
 
 
+    @staticmethod
+    def vibrate(dur) -> None:
+        if platform == 'android':
+            vibrator.vibrate(dur)
 
 
     @mainthread
@@ -187,6 +200,7 @@ class MushroomApp(App):
         # self.log('>>>>>', loc)
 
         self.loc_points.append(loc.copy())
+        # vibrate(0.02)
         json.dump(self.loc_points, open(json_file, 'w'), indent=2, sort_keys=True)
 
 
@@ -210,9 +224,14 @@ class MushroomApp(App):
         gpx_file = mgps_storage / 'MushroomGPS_{}.gpx'.format(now)
         self.log('>>>', gpx_file)
 
-        head = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n' +\
-               '<gpx version="1.1" creator="MushroomGPS" xmlns="http://www.topografix.com/GPX/1/1" xmlns:osmand="https://osmand.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">\n' +\
-               f'<metadata><name>MushroomGPS {now}</name><author>MushroomGPS</author></metadata>\n'
+        head = '\n'.join((
+            '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>',
+            '<gpx version="1.1" creator="MushroomGPS" xmlns="http://www.topografix.com/GPX/1/1" ',
+            # 'xmlns:mushgps="https://github.com/xtotdam/mushroom_gps" ',
+            'xmlns:osmand="https://osmand.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ',
+            'xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">',
+            f'<metadata><name>MushroomGPS {now}</name><author>MushroomGPS</author></metadata>'
+        ))
         foot = '</gpx>'
 
         with open(gpx_file, 'w') as f:
@@ -227,8 +246,8 @@ class MushroomApp(App):
                         '<desc>provider={prov}, category={category}, date={realdate}</desc>',
                         '<hdop>{acc}</hdop>',
                         '<extensions>',
-                            # '<markercolor>{color}</markercolor>',
-                            # '<osmand:background>circle</osmand:background>',
+                            # '<mushgps:markercolor>{color}</mushgps:markercolor>',
+                            f'<osmand:background>{osmand_bg[point["category"]]}</osmand:background>',
                             '<osmand:color>{color}</osmand:color>',
                             f'<osmand:icon>{osmand_markers[point["category"]]}</osmand:icon>',
                             '<category>{category}</category>',
@@ -251,6 +270,7 @@ class MushroomApp(App):
     def save_files(self):
         self.save_json()
         self.save_gpx()
+        # vibrate(0.02)
 
 
     def build(self):

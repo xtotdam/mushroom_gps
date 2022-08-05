@@ -41,6 +41,7 @@ Screen:
 
             TabbedPanelItem:
                 text: "Грибы"
+                on_release: app.vibrate(0.02)
 
                 GridLayout:
                     id: buttons
@@ -92,7 +93,8 @@ Screen:
 
 
             TabbedPanelItem:
-                text: "Ягоды"
+                text: "Растения"
+                on_release: app.vibrate(0.02)
 
                 GridLayout:
                     id: buttons
@@ -122,8 +124,17 @@ Screen:
                         text: "Клюква"
                         rgb: "#F20739"
 
+                    BerryButton:
+                        text: "Мох"
+                        rgb: "#298040"
+
+                    BerryButton:
+                        text: "Ствол"
+                        rgb: "#8f6728"
+
             TabbedPanelItem:
                 text: "Что-то еще"
+                on_release: app.vibrate(0.02)
 
                 BoxLayout:
                     orientation: "vertical"
@@ -153,15 +164,15 @@ Screen:
 
                         WhatGroupTB:
                             text: "Гриб"
-                            state: "down"
                             id: tg_mushroom
 
                         WhatGroupTB:
-                            text: "Ягоды"
+                            text: "Растение"
                             id: tg_berry
 
                         WhatGroupTB:
                             text: "Ориентир"
+                            state: "down"
                             id: tg_orientir
 
                         WhatGroupTB:
@@ -172,7 +183,7 @@ Screen:
                         text: "Отметить"
                         size_hint_y: 0.25
                         background_color: (0,1,0.5,1)
-                        on_release: app.save_point(something.text, '#0000ff', (tg_mushroom.state, tg_berry.state, tg_orientir.state, tg_other.state))
+                        on_release: app.save_point(something.text, '#0000ff', (tg_mushroom.state, tg_berry.state, tg_orientir.state, tg_other.state)); app.vibrate(0.02)
 
 
 
@@ -199,26 +210,26 @@ Screen:
                 text: "Сохранить\nфайлы"
                 background_color: (1,1,1,1)
                 size_hint_y: 0.15
-                on_release: app.save_files()
+                on_release: app.save_files(); app.vibrate(0.02)
 
             Button:
                 text: "Восста-\nновить"
                 background_color: (0,1,0,1)
-                on_release: app.restore_storage()
+                on_release: app.restore_storage(); app.vibrate(0.02)
 
             Button:
                 text: "Убрать\nпоследнюю\nзапись"
                 background_color: (1,1,0,1)
-                on_release: app.remove_last()
+                on_release: app.remove_last(); app.vibrate(0.02)
 
             Button:
                 text: "Очистить"
                 background_color: (1,0,0,1)
                 size_hint_y: 0.15
-                on_release: app.clear_storage()
+                on_release: app.clear_storage(); app.vibrate(0.02)
 
 <MyButton@Button>:
-    on_release: app.save_point(self.text, self.rgb, self.category)
+    on_release: app.save_point(self.text, self.rgb, self.category); app.vibrate(0.02)
     rgb: "#333333"
     background_color: rgba(self.rgb)
 
@@ -231,7 +242,9 @@ Screen:
 
 <WhatGroupTB@ToggleButton>:
     group: 'what'
+    on_release: app.vibrate(0.02)
 
 <ProvGroupTB@ToggleButton>:
     group: 'provider'
+    on_release: app.vibrate(0.02)
     # background_color: rgba("#ffff88")
